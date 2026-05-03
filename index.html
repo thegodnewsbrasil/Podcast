@@ -41,7 +41,24 @@
   .link-card:hover { background: #242424; }
   .link-card:active { background: #2a2a2a; }
 
-  .link-card.disabled {
+  /* Banner */
+  .banner {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(173,255,0,0.08);
+    border: 1px solid rgba(173,255,0,0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .banner strong { color: rgba(255,255,255,0.8); }
+  .banner span { margin-right: 4px; }
+
+    .link-card.disabled {
     opacity: 0.4;
     pointer-events: none;
   }
@@ -94,10 +111,36 @@
 
   .link-card:hover .seta { color: rgba(255,255,255,0.5); }
 </style>
+<script>
+  // Force open links in external browser (bypass Instagram/TikTok in-app browser)
+  function openExternal(url) {
+    // Try multiple methods to force external browser
+    window.open(url, '_system');
+    setTimeout(function() {
+      window.location.href = url;
+    }, 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var links = document.querySelectorAll('a.link-card');
+    links.forEach(function(link) {
+      var url = link.getAttribute('href');
+      if (url && url !== '#') {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          openExternal(url);
+        });
+      }
+    });
+  });
+</script>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="banner">
+    <span>🌐</span> Se o link não abrir, toque em <strong>···</strong> e selecione <strong>"Abrir no navegador"</strong>
+  </div>
+  <div class="wrapper">
 
   <!-- YouTube -->
   <a href="https://youtube.com/@thegoodnews_cast" target="_blank" class="link-card">
